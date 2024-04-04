@@ -12,9 +12,8 @@ const mongoSanitize = require("express-mongo-sanitize");
 
 const swaggerUI = require("swagger-ui-express");
 
-const hospitals = require("./routes/hospitals.js");
+const providers = require("./routes/providers.js");
 const auth = require("./routes/auth");
-const appointment = require("./routes/appointments");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -53,9 +52,8 @@ const swaggerOptions = {
   apis: ["./routes/*.js"],
 };
 
-app.use("/api/v1/hospitals", hospitals);
+app.use("/api/v1/providers", providers);
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/appointments", appointment);
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));

@@ -1,8 +1,8 @@
-const Hospital = require("../models/Hospital");
+const Provider = require("../models/Provider");
 const { param } = require("../routes/auth");
 const vacCenter = require("../models/VacCenter");
 //@desc     Get all hospitals
-//@route    GET /api/v1/hospitals
+//@route    GET /api/v1/providers
 //@access   Public
 
 exports.getVacCenters = (req, res, next) => {
@@ -15,7 +15,7 @@ exports.getVacCenters = (req, res, next) => {
   });
 };
 
-exports.getHospitals = async (req, res, next) => {
+exports.getProviders = async (req, res, next) => {
   let query;
 
   //Copy req.puery
@@ -35,7 +35,7 @@ exports.getHospitals = async (req, res, next) => {
     (match) => `$${match}`
   );
 
-  query = Hospital.find(JSON.parse(queryStr)).populate("appointments");
+  query = Provider.find(JSON.parse(queryStr));
 
   //Select fields
   if (req.query.select) {
@@ -56,11 +56,11 @@ exports.getHospitals = async (req, res, next) => {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
   try {
-    const total = await Hospital.countDocuments();
+    const total = await Provider.countDocuments();
     query = query.skip(startIndex).limit(limit);
 
     //Execute query
-    const hospitals = await query;
+    const providers = await query;
 
     //Pagination
     const pagination = {};
@@ -81,17 +81,8 @@ exports.getHospitals = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ success: true, count: hospitals.length, data: hospitals });
+      .json({ success: true, count: providers.length, data: providers });
   } catch {
-    res.status(400).json({ success: false });
-  }
-
-  try {
-    const hospitals = await query;
-    res
-      .status(200)
-      .json({ success: true, count: hospitals.length, data: hospitals });
-  } catch (err) {
     res.status(400).json({ success: false });
   }
 };
@@ -100,13 +91,13 @@ exports.getHospitals = async (req, res, next) => {
 //@route    GET /api/v1/hospitals/:id
 //@access   Public
 
-exports.getHospital = async (req, res, next) => {
+exports.getProvider = async (req, res, next) => {
   try {
-    const hospital = await Hospital.findById(req.params.id);
-    if (!hospital) {
+    const provider = await Provider.findById(req.params.id);
+    if (!provider) {
       return res.status(400).json({ success: false });
     }
-    res.status(200).json({ success: true, data: hospital });
+    res.status(200).json({ success: true, data: provider });
   } catch (err) {
     res.status(400).json({ success: false });
   }
@@ -116,26 +107,26 @@ exports.getHospital = async (req, res, next) => {
 //@route    POST /api/v1/hospitals
 //@access   Private
 
-exports.createHospital = async (req, res, next) => {
-  const hospital = await Hospital.create(req.body);
+exports.createProvider = async (req, res, next) => {
+  const provider = await Provider.create(req.body);
 
-  res.status(201).json({ success: true, data: hospital });
+  res.status(201).json({ success: true, data: provider });
 };
 
 //@desc     Update single hospitals
 //@route    PUT /api/v1/hospitals/:id
 //@access   Private
 
-exports.updateHospital = async (req, res, next) => {
+exports.updateProvider = async (req, res, next) => {
   try {
-    const hospital = await Hospital.findByIdAndUpdate(req.params.id, req.body, {
+    const provider = await Provider.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!hospital) {
+    if (!provider) {
       return res.status(400).json({ success: false });
     }
-    res.status(200).json({ success: true, data: hospital });
+    res.status(200).json({ success: true, data: provider });
   } catch (err) {
     res.status(400).json({ success: false });
   }
@@ -145,14 +136,14 @@ exports.updateHospital = async (req, res, next) => {
 //@route    DELETE /api/v1/hospitals/:id
 //@access   Private
 
-exports.deleteHospital = async (req, res, next) => {
+exports.deleteProvider = async (req, res, next) => {
   try {
-    const hospital = await Hospital.findById(req.params.id);
-    if (!hospital) {
+    const provider = await Provider.findById(req.params.id);
+    if (!provider) {
       return res.status(400).json({ success: false });
     }
 
-    hospital.remove();
+    provider.remove();
     res.status(200).json({ success: true, data: {} });
   } catch (err) {
     res.status(400).json({ success: false });
