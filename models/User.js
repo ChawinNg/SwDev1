@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin", "publisher"],
     default: "user",
   },
+  telephone: {
+    type: String,
+    unique: true,
+    match: [/^[0-9]{10}/],
+  },
   password: {
     type: String,
     require: [true, "Please add password"],

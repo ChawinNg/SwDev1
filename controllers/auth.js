@@ -20,6 +20,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    telephone: user.telephone,
     //end for frontend
     token,
   });
@@ -30,9 +31,10 @@ const sendTokenResponse = (user, statusCode, res) => {
 //@access Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, telephone, role } = req.body;
     const user = await User.create({
       name,
+      telephone,
       email,
       password,
       role,
