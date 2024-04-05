@@ -1,7 +1,7 @@
 const Provider = require("../models/Provider");
 const { param } = require("../routes/auth");
 const vacCenter = require("../models/VacCenter");
-//@desc     Get all hospitals
+//@desc     Get all providers
 //@route    GET /api/v1/providers
 //@access   Public
 
@@ -87,8 +87,8 @@ exports.getProviders = async (req, res, next) => {
   }
 };
 
-//@desc     Get single hospitals
-//@route    GET /api/v1/hospitals/:id
+//@desc     Get single providers
+//@route    GET /api/v1/providers/:id
 //@access   Public
 
 exports.getProvider = async (req, res, next) => {
@@ -103,8 +103,8 @@ exports.getProvider = async (req, res, next) => {
   }
 };
 
-//@desc     Create hospitals
-//@route    POST /api/v1/hospitals
+//@desc     Create providers
+//@route    POST /api/v1/providers
 //@access   Private
 
 exports.createProvider = async (req, res, next) => {
@@ -113,8 +113,8 @@ exports.createProvider = async (req, res, next) => {
   res.status(201).json({ success: true, data: provider });
 };
 
-//@desc     Update single hospitals
-//@route    PUT /api/v1/hospitals/:id
+//@desc     Update single providers
+//@route    PUT /api/v1/providers/:id
 //@access   Private
 
 exports.updateProvider = async (req, res, next) => {
@@ -132,8 +132,8 @@ exports.updateProvider = async (req, res, next) => {
   }
 };
 
-//@desc     Delete single hospitals
-//@route    DELETE /api/v1/hospitals/:id
+//@desc     Delete single providers
+//@route    DELETE /api/v1/providers/:id
 //@access   Private
 
 exports.deleteProvider = async (req, res, next) => {

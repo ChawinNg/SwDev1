@@ -8,12 +8,12 @@ const {
   deleteProvider,
 } = require("../controllers/providers");
 
-// const appointmentRouter = require("./appointments");
+const favoriteRouter = require("./favorites");
 const router = express.Router();
 
 const { protect, authorize } = require("../middleware/auth");
 
-// router.use("/:hospitalId/appointments/", appointmentRouter);
+router.use("/:providerId/favorites/", favoriteRouter);
 
 router.route("/vacCenters").get(getVacCenters);
 
