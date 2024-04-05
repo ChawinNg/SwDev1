@@ -40,6 +40,17 @@ exports.addFavorite = async (req, res, next) => {
     }
 
     req.body.user = req.user.id;
+    const existesFavorites = await Favorite.find({
+      user: req.user.id,
+      provider: req.params.providerId,
+    });
+
+    if (existesFavorites.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `The user with ID ${req.user.id} has already favorite this provider`,
+      });
+    }
     const favorite = await Favorite.create(req.body);
 
     res.status(200).json({
