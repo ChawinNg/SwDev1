@@ -15,6 +15,7 @@ const swaggerUI = require("swagger-ui-express");
 const providers = require("./routes/providers.js");
 const auth = require("./routes/auth");
 const favorite = require("./routes/favorites.js");
+const bookings = require("./routes/bookings.js")
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -56,6 +57,8 @@ const swaggerOptions = {
 app.use("/api/v1/providers", providers);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/favorites", favorite);
+app.use("/api/v1/bookings", bookings);
+
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
