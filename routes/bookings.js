@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getBookings,
-  // getBooking,
+  getBooking,
   addBooking,
   updateBooking,
   deleteBooking,
@@ -16,7 +16,7 @@ router
 
 router
   .route("/:id")
-  // .get(protect, getBooking)
+  .get(protect, getBooking)
   .put(protect, authorize("admin", "user"), updateBooking)
   .delete(protect, authorize("admin", "user"), deleteBooking);
 
