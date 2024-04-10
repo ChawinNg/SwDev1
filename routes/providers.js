@@ -9,11 +9,14 @@ const {
 } = require("../controllers/providers");
 
 const favoriteRouter = require("./favorites");
+const bookingRouter = require("./bookings");
+
 const router = express.Router();
 
 const { protect, authorize } = require("../middleware/auth");
 
 router.use("/:providerId/favorites/", favoriteRouter);
+router.use('/:providerId/bookings/',bookingRouter);
 
 router.route("/vacCenters").get(getVacCenters);
 

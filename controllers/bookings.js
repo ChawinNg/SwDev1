@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const Provider = require("../models/Provider");
-
+const Booking = require("../models/Booking")
 //@desc     Get all bookings
 //@route    GET /api/v1/bookings
 //@access   Private
@@ -52,11 +52,33 @@ exports.getBookings = async (req, res, next) => {
   }
 };
 
+exports.getBooking = async (req, res, next) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate({
+      path: "provider",
+      select: "bookingDate provider",
+    });
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: `No booking with the id of ${req.params.id}`,
+      });
+    }
+    res.status(200).json({ success: true, data: booking });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Cannot find booking" });
+  }
+};
+
 //@desc     Add booking
 //@route    POST /api/v1/providers/:providerId/bookings
 //@access   Private
 exports.addBooking = async (req, res, next) => {
   try {
+    console.log(req.body,"test 2",req.params)
     req.body.provider = req.params.providerId;
     const provider = await Provider.findById(req.params.providerId);
 
@@ -79,7 +101,7 @@ exports.addBooking = async (req, res, next) => {
     }
 
     const booking = await Booking.create(req.body);
-    console.log(booking);
+    console.log(booking,"test");
     res.status(200).json({
       success: true,
       data: booking,
