@@ -138,12 +138,11 @@ exports.updateProvider = async (req, res, next) => {
 
 exports.deleteProvider = async (req, res, next) => {
   try {
-    const provider = await Provider.findById(req.params.id);
+    const provider = await Provider.findByIdAndDelete(req.params.id);
     if (!provider) {
       return res.status(400).json({ success: false });
     }
 
-    provider.remove();
     res.status(200).json({ success: true, data: {} });
   } catch (err) {
     res.status(400).json({ success: false });
