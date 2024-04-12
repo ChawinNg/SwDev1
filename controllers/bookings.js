@@ -65,10 +65,10 @@ exports.getBooking = async (req, res, next) => {
         message: `No booking with the id of ${req.params.id}`,
       });
     }
-    if (req.user.role === "user" && req.user.id !== booking.user) {
+    if (req.user.role === "user" && req.user.id !== booking.user.toString()) {
       return res.status(401).json({
         success: false,
-        message: `The booking with the id of ${req.params.id} is not yours`,
+        message: `User ${req.user.id} is not authorized to get this Booking`,
       });
     }
     res.status(200).json({ success: true, data: booking });
