@@ -30,11 +30,15 @@ const ProviderSchema = new mongoose.Schema(
 //   justOne: false,
 // });
 
-//Cascade delete appointments when a hospital is deleted
-// ProviderSchema.pre("remove", async function (next) {
-//   console.log(`Appointments being removed from hospital ${this._id}`);
-//   await this.model("Appointment").deleteMany({ hospital: this._id });
-//   next();
-// });
+// Cascade delete Bookings when a provider is deleted
+ProviderSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    console.log(`Bookings being removed from provider ${this._id}`);
+    await this.model("Booking").deleteMany({ provider: this._id });
+    next();
+  }
+);
 
 module.exports = mongoose.model("Provider", ProviderSchema);
