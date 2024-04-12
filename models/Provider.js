@@ -37,6 +37,9 @@ ProviderSchema.pre(
   async function (next) {
     console.log(`Bookings being removed from provider ${this._id}`);
     await this.model("Booking").deleteMany({ provider: this._id });
+
+    console.log(`Favorites being removed from provider ${this._id}`);
+    await this.model("Favorite").deleteMany({ provider: this._id });
     next();
   }
 );

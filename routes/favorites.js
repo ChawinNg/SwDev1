@@ -1,6 +1,10 @@
 const express = require("express");
 
-const { getFavorites, addFavorite } = require("../controllers/favorites");
+const {
+  getFavorites,
+  addFavorite,
+  deleteFavorite,
+} = require("../controllers/favorites");
 
 const router = express.Router({ mergeParams: true });
 
@@ -10,5 +14,9 @@ router
   .route("/")
   .get(protect, getFavorites)
   .post(protect, authorize("admin", "user"), addFavorite);
+
+router
+  .route("/:id")
+  .delete(protect, authorize("admin", "user"), deleteFavorite);
 
 module.exports = router;
